@@ -1,0 +1,193 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f8;
+    color: #222;
+    line-height: 1.6;
+}
+
+/* HEADER */
+
+header{
+    background-color: #2563eb;
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+}
+header h1 {
+    margin: 0 0 10;
+    font-size: 2.5rem;
+}
+header p {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+/* Main Content */
+
+main {
+    width: 90%;
+    max-width: 700px;
+    margin: 30px auto;
+}
+
+/* SECTIONS */
+section {
+    background-color: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+section h2{
+    margin-top: 0;
+    color: #1f2937;
+}
+
+/* FORM */
+#note-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+
+}
+#note-input {
+    flex: 1;
+    min-width: 200px;
+}
+#note-input,
+#note-category,
+#search-input {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+#note-category{
+    background-color: white;
+}
+button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    background-color: #2563eb;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: #1d4ed8;
+
+}
+/* SEARCH */
+#search-input {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+/* ERROR MESSAGE */
+#error-message {
+    color: #dc2626;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+/* NOTE LIST */
+#note-list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* NOTE CARDS */
+.note-card p {
+    margin: 8px 0;
+}
+.note-date {
+    color: #6b7280;
+    font-size: 0.85rem;
+}
+/* CATEGORY STYLE*/
+.category-personal{
+    border-left: 5px solid #14b8a6;
+
+}
+.category-personal .note-category{
+    background-color: #ccfbf1;
+    color: #0f766e;
+}
+.category-work {
+    border-left: 5px solid #991b1b;
+}
+
+.category-work .note-category {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+
+.category-study {
+    border-left: 5px solid #2563eb;
+}
+
+.category-study .note-category {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+}
+
+
+/* =========================
+   Footer
+   ========================= */
+
+footer {
+    background-color: #1f2937;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+footer p {
+    margin: 0;
+}
+
+
+/* =========================
+   Mobile Responsive Design
+   ========================= */
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 30px 15px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    main {
+        width: 95%;
+        margin: 20px auto;
+    }
+
+    section {
+        padding: 20px;
+    }
+
+    #note-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #note-input,
+    #note-category,
+    #note-form button {
+        width: 100%;
+    }
+}
