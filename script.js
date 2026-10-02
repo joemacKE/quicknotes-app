@@ -19,14 +19,34 @@ let notes = [];
 
 
 // =========================
+// Load notes from localStorage
+// =========================
+
+const savedNotes = localStorage.getItem("quicknotes");
+
+if (savedNotes) {
+    notes = JSON.parse(savedNotes);
+}
+
+
+// =========================
+// Save notes to localStorage
+// =========================
+
+function saveNotes() {
+    localStorage.setItem("quicknotes", JSON.stringify(notes));
+}
+
+
+// =========================
 // Render notes
 // =========================
 
 function render() {
-    // Clear the current list before rebuilding it
+    // Clear the current list
     notesList.textContent = "";
 
-    // Update the note count
+    // Update the total note count
     if (notes.length === 0) {
         noteCount.textContent = "You have no notes yet.";
     } else if (notes.length === 1) {
@@ -35,45 +55,62 @@ function render() {
         noteCount.textContent = `You have ${notes.length} notes.`;
     }
 
-    // Create a card for every note
-    notes.forEach(function (note) {
+    // Get the search text
+    const searchText = searchInput.value.trim().toLowerCase();
+
+    // Filter notes based on the search text
+    const filteredNotes = notes.filter(function (note) {
+        return note.text.toLowerCase().includes(searchText);
+    });
+
+    // Show a message if the search finds nothing
+    if (filteredNotes.length === 0 && searchText !== "") {
+        const noResults = document.createElement("li");
+        noResults.textContent = "No notes match your search.";
+        notesList.appendChild(noResults);
+        return;
+    }
+
+    // Create a card for each matching note
+    filteredNotes.forEach(function (note) {
 
         const listItem = document.createElement("li");
         listItem.classList.add("note-card");
 
-        // Add the category class
+        // Add category class
         const categoryClass = `category-${note.category.toLowerCase()}`;
         listItem.classList.add(categoryClass);
 
-        // Create category label
+        // Category label
         const categoryLabel = document.createElement("span");
         categoryLabel.classList.add("note-category");
         categoryLabel.textContent = note.category;
 
-        // Create note text
+        // Note text
         const noteText = document.createElement("p");
         noteText.textContent = note.text;
 
-        // Create date
+        // Date and time
         const dateElement = document.createElement("p");
         dateElement.classList.add("note-date");
         dateElement.textContent = note.createdAt;
 
-        // Create delete button
+        // Delete button
         const deleteButton = document.createElement("button");
         deleteButton.type = "button";
         deleteButton.textContent = "Delete";
 
-        // Delete this specific note
+        // Delete this note
         deleteButton.addEventListener("click", function () {
             notes = notes.filter(function (item) {
                 return item.id !== note.id;
             });
 
+            saveNotes();
             render();
         });
 
-        // Add everything to the note card
+        // Add elements to the note card
         listItem.appendChild(categoryLabel);
         listItem.appendChild(noteText);
         listItem.appendChild(dateElement);
@@ -92,7 +129,7 @@ function render() {
 noteForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    // Remove unnecessary spaces
+    // Get the note text and remove unnecessary spaces
     const text = noteInput.value.trim();
     const category = noteCategory.value;
 
@@ -116,15 +153,27 @@ noteForm.addEventListener("submit", function (event) {
         createdAt: new Date().toLocaleString()
     };
 
-    // Add note to the array
+    // Add the note to the array
     notes.push(newNote);
 
-    // Update the page
+    // Save the updated notes
+    saveNotes();
+
+    // Re-render the notes
     render();
 
     // Clear the input and error message
     noteInput.value = "";
     errorMessage.textContent = "";
+});
+
+
+// =========================
+// Search notes
+// =========================
+
+searchInput.addEventListener("input", function () {
+    render();
 });
 
 
